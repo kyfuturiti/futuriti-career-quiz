@@ -113,6 +113,7 @@ body{background:#fff;}
   body *{visibility:hidden;}
   #print-area,#print-area *{visibility:visible;}
   #print-area{position:absolute;left:0;top:0;width:100%;padding:24px;}
+  #print-area *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
 }
 #print-area{display:none;}
 </style>
@@ -304,12 +305,13 @@ function getTopCareers(types){
 
 function careerCardHTML(c,idx){
   const dClass='demand-'+(c.demand||'Medium');
-  const appHTML=c.apprenticeships&&c.apprenticeships.length
+  const appHTML=c.hasApprentice||(c.apprenticeships&&c.apprenticeships.length)
     ?`<div class="app-callout">🎓 Apprenticeship programs available in Kentucky</div>`:'';
   const schoolRows=c.schools.map(s=>{
+    if(typeof s==='string') return`<div class="school-row"><div><div class="school-name">${s}</div></div></div>`;
     const url=ensureHttp(s.web);
-    const parts=[s.major+' · '+s.degree,s.cost?'$'+s.cost.toLocaleString()+'/yr':null,s.gradRate?s.gradRate+'% grad rate':null,s.wage50?'Grads earn ~'+fmt(s.wage50):null].filter(Boolean);
-    return`<div class="school-row"><div><div class="school-name">${s.name}</div><div class="school-meta">${parts.join(' · ')}</div></div>${url?`<a class="school-link" href="${url}" target="_blank">Visit →</a>`:''}</div>`;
+    const parts=[s.major&&s.degree?s.major+' · '+s.degree:null,s.cost?'$'+s.cost.toLocaleString()+'/yr':null,s.gradRate?s.gradRate+'% grad rate':null,s.wage50?'Grads earn ~'+fmt(s.wage50):null].filter(Boolean);
+    return`<div class="school-row"><div><div class="school-name">${s.name||s}</div>${parts.length?`<div class="school-meta">${parts.join(' · ')}</div>`:''}</div>${url?`<a class="school-link" href="${url}" target="_blank">Visit →</a>`:''}</div>`;
   }).join('');
   return`<div class="career-card">
     <div class="career-top"><div class="career-title">${c.title}</div><span class="demand-badge ${dClass}">${c.demand} demand</span></div>
