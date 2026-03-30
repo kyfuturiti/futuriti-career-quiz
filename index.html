@@ -113,11 +113,10 @@ body{background:#fff;}
   .brand-title{font-size:19px;}
 }
 @media print{
-  html,body{height:auto !important;overflow:visible !important;}
-  body *{visibility:hidden !important;height:0 !important;overflow:hidden !important;}
-  #print-area{display:block !important;visibility:visible !important;height:auto !important;overflow:visible !important;position:absolute;left:0;top:0;width:100%;padding:20px;margin:0;}
-  #print-area *{visibility:visible !important;height:auto !important;overflow:visible !important;-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
-  @page{margin:0.5cm;size:A4;}
+  body>*{display:none !important;}
+  #print-area{display:block !important;position:static !important;padding:0 !important;margin:0 !important;}
+  #print-area *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+  @page{margin:1cm;size:A4;}
 }
 #print-area{display:none;}
 </style>
@@ -374,7 +373,7 @@ function downloadResults(){
     </tr>`;
   });
   document.getElementById('print-area').innerHTML=`<div style="font-family:'Poppins',Arial,sans-serif;max-width:680px;">
-    <div style="background:#2B4EE8;border-radius:6px;padding:14px 18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+    <div style="background:#7B3FD4;border-radius:6px;padding:14px 18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
       <div><span style="font-size:20px;font-weight:700;color:#fff;">Futuriti</span><br><span style="font-size:9px;color:rgba(255,255,255,0.7);">futuriti.org · Kentucky career &amp; college planning</span></div>
       <div style="text-align:right;"><div style="font-size:12px;font-weight:700;color:#fff;">${userName||'Career Interest Profile'}</div><div style="font-size:9px;color:rgba(255,255,255,0.75);">${today}</div></div>
     </div>
@@ -416,7 +415,10 @@ function downloadResults(){
     </div>
   </div>`;
   document.getElementById('print-area').style.display='block';
-  setTimeout(()=>{window.print();document.getElementById('print-area').style.display='none';},100);
+  setTimeout(()=>{
+    window.print();
+    setTimeout(()=>{document.getElementById('print-area').style.display='none';},500);
+  },300);
 }
 function restart(){
   answers=[];cur=0;userName='';scores={};topTypes=[];sortedScores=[];
