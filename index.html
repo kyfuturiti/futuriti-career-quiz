@@ -113,10 +113,11 @@ body{background:#fff;}
   .brand-title{font-size:19px;}
 }
 @media print{
-  body *{visibility:hidden;}
-  #print-area,#print-area *{visibility:visible;}
-  #print-area{position:absolute;left:0;top:0;width:100%;padding:24px;}
-  #print-area *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+  html,body{height:auto !important;overflow:visible !important;}
+  body *{visibility:hidden !important;height:0 !important;overflow:hidden !important;}
+  #print-area{display:block !important;visibility:visible !important;height:auto !important;overflow:visible !important;position:absolute;left:0;top:0;width:100%;padding:20px;margin:0;}
+  #print-area *{visibility:visible !important;height:auto !important;overflow:visible !important;-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+  @page{margin:0.5cm;size:A4;}
 }
 #print-area{display:none;}
 </style>
@@ -359,55 +360,55 @@ function downloadResults(){
   const topCareers=getTopCareers(topTypes);
   let rows='';
   topCareers.forEach(c=>{
-    const app=c.hasApprentice?`<div style="font-size:9px;color:#534AB7;margin-top:1px;">🎓 Apprenticeship available in KY</div>`:'';
+    const app=c.hasApprentice?`<div style="font-size:8px;color:#534AB7;margin-top:1px;">🎓 Apprenticeship available in KY</div>`:'';
     rows+=`<tr style="border-bottom:1px solid #f5f5f5;">
-      <td style="padding:7px 8px 7px 0;vertical-align:middle;">
-        <div style="font-size:12px;font-weight:700;color:#1a1a1a;">${c.title}</div>
+      <td style="padding:5px 8px 5px 0;vertical-align:middle;">
+        <div style="font-size:11px;font-weight:700;color:#1a1a1a;">${c.title}</div>
         ${app}
       </td>
-      <td style="padding:7px 8px 7px 0;vertical-align:middle;font-size:9px;color:#555;">${c.education}</td>
-      <td style="padding:7px 8px 7px 0;vertical-align:middle;">
-        <span style="font-size:9px;font-weight:600;padding:2px 8px;border-radius:99px;background:${dBg[c.demand]};color:${dTxt[c.demand]};white-space:nowrap;">${c.demand}</span>
+      <td style="padding:5px 8px 5px 0;vertical-align:middle;font-size:9px;color:#555;">${c.education}</td>
+      <td style="padding:5px 8px 5px 0;vertical-align:middle;">
+        <span style="font-size:9px;font-weight:600;padding:2px 7px;border-radius:99px;background:${dBg[c.demand]};color:${dTxt[c.demand]};white-space:nowrap;">${c.demand}</span>
       </td>
-      <td style="padding:7px 0 7px 0;vertical-align:middle;text-align:right;font-size:12px;font-weight:700;color:#1a1a1a;white-space:nowrap;">${fmt(c.typical)}</td>
+      <td style="padding:5px 0;vertical-align:middle;text-align:right;font-size:11px;font-weight:700;color:#1a1a1a;white-space:nowrap;">${fmt(c.typical)}</td>
     </tr>`;
   });
-  document.getElementById('print-area').innerHTML=`<div style="font-family:'Poppins',Arial,sans-serif;max-width:700px;">
-    <div style="background:linear-gradient(135deg,#2B4EE8,#7B3FD4,#C040E8);border-radius:8px;padding:18px 22px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;">
-      <div><span style="font-size:22px;font-weight:700;color:#fff;">Futuriti</span><br><span style="font-size:10px;color:rgba(255,255,255,0.7);">futuriti.org · Kentucky career &amp; college planning</span></div>
-      <div style="text-align:right;"><div style="font-size:13px;font-weight:700;color:#fff;">${userName||'Career Interest Profile'}</div><div style="font-size:10px;color:rgba(255,255,255,0.75);">${today}</div></div>
+  document.getElementById('print-area').innerHTML=`<div style="font-family:'Poppins',Arial,sans-serif;max-width:680px;">
+    <div style="background:#2B4EE8;border-radius:6px;padding:14px 18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;">
+      <div><span style="font-size:20px;font-weight:700;color:#fff;">Futuriti</span><br><span style="font-size:9px;color:rgba(255,255,255,0.7);">futuriti.org · Kentucky career &amp; college planning</span></div>
+      <div style="text-align:right;"><div style="font-size:12px;font-weight:700;color:#fff;">${userName||'Career Interest Profile'}</div><div style="font-size:9px;color:rgba(255,255,255,0.75);">${today}</div></div>
     </div>
-    <div style="display:flex;align-items:center;gap:14px;background:${pt.lightBg};border-radius:8px;padding:14px 16px;margin-bottom:14px;">
-      <div style="font-size:36px;flex-shrink:0;">${pt.icon}</div>
+    <div style="display:flex;align-items:center;gap:12px;background:${pt.lightBg};border-radius:6px;padding:11px 14px;margin-bottom:11px;">
+      <div style="font-size:30px;flex-shrink:0;">${pt.icon}</div>
       <div>
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:${pt.barColor};">Top interest type · ${pt.label}</div>
-        <div style="font-size:19px;font-weight:700;color:${pt.textColor};margin:2px 0;">${pt.name}</div>
-        <div style="font-size:11px;color:${pt.textColor};line-height:1.5;">${pt.desc}</div>
+        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:${pt.barColor};">Top interest type · ${pt.label}</div>
+        <div style="font-size:17px;font-weight:700;color:${pt.textColor};margin:2px 0;">${pt.name}</div>
+        <div style="font-size:10px;color:${pt.textColor};line-height:1.5;">${pt.desc}</div>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:16px;">
-      ${sortedScores.map(([k,s])=>`<div style="border-radius:6px;padding:7px 4px;text-align:center;background:${TYPES[k].lightBg};">
-        <div style="font-size:14px;">${TYPES[k].icon}</div>
-        <div style="font-size:8px;font-weight:600;color:${TYPES[k].textColor};margin:2px 0;">${TYPES[k].name}</div>
-        <div style="font-size:16px;font-weight:700;color:${TYPES[k].textColor};line-height:1;">${s}</div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-bottom:12px;">
+      ${sortedScores.map(([k,s])=>`<div style="border-radius:5px;padding:5px 3px;text-align:center;background:${TYPES[k].lightBg};">
+        <div style="font-size:12px;">${TYPES[k].icon}</div>
+        <div style="font-size:8px;font-weight:600;color:${TYPES[k].textColor};margin:1px 0;">${TYPES[k].name}</div>
+        <div style="font-size:14px;font-weight:700;color:${TYPES[k].textColor};line-height:1;">${s}</div>
         <div style="font-size:8px;color:${TYPES[k].textColor};opacity:0.65;">/ 25</div>
       </div>`).join('')}
     </div>
-    <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#aaa;margin-bottom:8px;">Career recommendations</div>
-    <table style="width:100%;border-collapse:collapse;margin-bottom:16px;">
+    <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#aaa;margin-bottom:6px;">Career recommendations</div>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:12px;table-layout:fixed;">
       <thead>
         <tr style="border-bottom:2px solid #f0f0f0;">
-          <th style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#bbb;padding:4px 8px 6px 0;text-align:left;">Career</th>
-          <th style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#bbb;padding:4px 8px 6px 0;text-align:left;">Education required</th>
-          <th style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#bbb;padding:4px 8px 6px 0;text-align:left;">KY demand</th>
-          <th style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#bbb;padding:4px 0 6px 0;text-align:right;">Typical wage in Kentucky</th>
+          <th style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#bbb;padding:3px 8px 5px 0;text-align:left;width:38%;">Career</th>
+          <th style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#bbb;padding:3px 8px 5px 0;text-align:left;width:28%;">Education required</th>
+          <th style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#bbb;padding:3px 8px 5px 0;text-align:left;width:14%;">KY demand</th>
+          <th style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#bbb;padding:3px 0 5px 0;text-align:right;width:20%;">Typical wage in Kentucky</th>
         </tr>
       </thead>
       <tbody>${rows}</tbody>
     </table>
-    <div style="background:#EEEDFE;border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;">
-      <div style="font-size:11px;color:#3C3489;line-height:1.5;">Explore Kentucky schools with programs for each of these careers — plus 700+ more careers, wages, and pathways — on Futuriti's Future Finder.</div>
-      <div style="font-size:11px;font-weight:700;color:#2B4EE8;white-space:nowrap;">futuriti.org →</div>
+    <div style="background:#EEEDFE;border-radius:6px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;">
+      <div style="font-size:10px;color:#3C3489;line-height:1.5;">Explore Kentucky schools with programs for each of these careers — plus 700+ more careers, wages, and pathways — on Futuriti's Future Finder.</div>
+      <div style="font-size:10px;font-weight:700;color:#2B4EE8;white-space:nowrap;">futuriti.org →</div>
     </div>
     <div style="font-size:8px;color:#ccc;text-align:center;line-height:1.7;">
       Career and wage data provided by KYSTATS · Interest questions based on the O*NET Interest Profiler, U.S. Dept. of Labor<br>
