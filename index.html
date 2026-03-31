@@ -33,6 +33,7 @@ body{background:#fff;}
 .q-card.exit{opacity:0;transform:translateX(-30px);}
 .q-card.enter{opacity:0;transform:translateX(30px);}
 .q-text{font-size:21px;font-weight:600;color:#1a1a1a;margin-bottom:2rem;line-height:1.35;min-height:60px;}
+.q-hint{font-size:12px;font-weight:400;color:#888;background:rgba(255,255,255,0.45);border-radius:8px;padding:7px 12px;margin-bottom:1.2rem;line-height:1.6;text-align:center;}
 .q-prompt{font-size:13px;font-weight:400;color:#888;margin-bottom:1rem;}
 .faces-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
 .face-btn{display:flex;flex-direction:column;align-items:center;gap:6px;border:2px solid transparent;border-radius:14px;padding:12px 8px;cursor:pointer;transition:transform 0.12s,border-color 0.12s,background 0.12s;min-width:58px;background:#f5f5f5;}
@@ -152,6 +153,7 @@ body{background:#fff;}
     </div>
     <div class="q-card" id="q-card">
       <div class="q-text" id="q-text"></div>
+      <div class="q-hint" id="q-hint"></div>
       <div class="q-prompt">How would you feel doing this?</div>
       <div class="faces-row">
         <button class="face-btn" onclick="pick(1)"><span class="face-emoji">😤</span><span class="face-lbl">Not<br>for me</span></button>
@@ -204,21 +206,36 @@ const TYPES={
 };
 
 const QS=[
-  {text:"Build kitchen cabinets",type:"R"},{text:"Develop a new medicine",type:"I"},{text:"Write books or plays",type:"A"},
-  {text:"Help people with personal or emotional problems",type:"S"},{text:"Manage a department within a large company",type:"E"},
-  {text:"Install software across computers on a large network",type:"C"},{text:"Repair household appliances",type:"R"},
-  {text:"Study ways to reduce water pollution",type:"I"},{text:"Compose or arrange music",type:"A"},
-  {text:"Give career guidance to people",type:"S"},{text:"Paint sets for plays",type:"A"},
-  {text:"Do volunteer work at a non-profit organization",type:"S"},{text:"Market a new line of clothing",type:"E"},
-  {text:"Inventory supplies using a hand-held computer",type:"C"},{text:"Test the quality of parts before shipment",type:"R"},
-  {text:"Develop a way to better predict the weather",type:"I"},{text:"Write scripts for movies or television shows",type:"A"},
-  {text:"Teach a high-school class",type:"S"},{text:"Sell merchandise at a department store",type:"E"},
-  {text:"Stamp, sort, and distribute mail for an organization",type:"C"},{text:"Start your own business",type:"E"},
-  {text:"Operate a calculator",type:"C"},{text:"Assemble electronic parts",type:"R"},
-  {text:"Conduct chemical experiments",type:"I"},{text:"Create special effects for movies",type:"A"},
-  {text:"Perform rehabilitation therapy",type:"S"},{text:"Negotiate business contracts",type:"E"},
-  {text:"Keep shipping and receiving records",type:"C"},{text:"Drive a truck to deliver packages",type:"R"},
-  {text:"Examine blood samples using a microscope",type:"I"}
+  {text:"Build kitchen cabinets",type:"R",hint:"Think: making or building something out of wood, like shelves, furniture, or a birdhouse"},
+  {text:"Develop a new medicine",type:"I",hint:"Think: doing science experiments to figure out how something works or find a cure for a disease"},
+  {text:"Write books or plays",type:"A",hint:"Think: making up stories, writing scripts for videos, or creating something for people to read or watch"},
+  {text:"Help people with personal or emotional problems",type:"S",hint:"Think: listening to someone who is going through a hard time and helping them feel better or figure things out"},
+  {text:"Manage a department within a large company",type:"E",hint:"Think: being in charge of a group of people at work — setting goals, making decisions, and keeping things running"},
+  {text:"Install software across computers on a large network",type:"C",hint:"Think: setting up and organizing technology for a school or business so everything works the right way"},
+  {text:"Repair household appliances",type:"R",hint:"Think: fixing things around the house like a broken washer, refrigerator, or microwave"},
+  {text:"Study ways to reduce water pollution",type:"I",hint:"Think: doing research to figure out how to keep rivers, lakes, and oceans clean and safe"},
+  {text:"Compose or arrange music",type:"A",hint:"Think: creating your own songs or putting together the different instruments and sounds in a piece of music"},
+  {text:"Give career guidance to people",type:"S",hint:"Think: helping someone figure out what job or career might be a good fit for them based on their interests and skills"},
+  {text:"Paint sets for plays",type:"A",hint:"Think: creating the painted backgrounds and decorations you see on stage during a school play or theater show"},
+  {text:"Do volunteer work at a non-profit organization",type:"S",hint:"Think: giving your time for free to help a group that does good things in your community, like a food bank or animal shelter"},
+  {text:"Market a new line of clothing",type:"E",hint:"Think: coming up with ideas to get people excited about and interested in buying a new brand or style of clothes"},
+  {text:"Inventory supplies using a hand-held computer",type:"C",hint:"Think: using a device to scan and keep track of products or supplies so a business always knows what it has"},
+  {text:"Test the quality of parts before shipment",type:"R",hint:"Think: checking products in a factory to make sure they work correctly before they are sent to stores or customers"},
+  {text:"Develop a way to better predict the weather",type:"I",hint:"Think: using data and science to create tools that can tell people more accurately if it will rain, snow, or be sunny"},
+  {text:"Write scripts for movies or television shows",type:"A",hint:"Think: writing the words that actors say and describing what happens in a show, movie, or YouTube video"},
+  {text:"Teach a high-school class",type:"S",hint:"Think: standing in front of students every day and helping them learn a subject you know a lot about"},
+  {text:"Sell merchandise at a department store",type:"E",hint:"Think: helping customers find what they need and convincing them to buy something at a store"},
+  {text:"Stamp, sort, and distribute mail for an organization",type:"C",hint:"Think: organizing and sending out letters and packages so they get to the right people at the right time"},
+  {text:"Start your own business",type:"E",hint:"Think: coming up with an idea for a product or service, and then building it into something people want to pay for"},
+  {text:"Operate a calculator",type:"C",hint:"Think: using numbers and math tools to figure out totals, budgets, or other calculations for a job"},
+  {text:"Assemble electronic parts",type:"R",hint:"Think: putting together the small pieces inside a device like a phone, computer, or remote control"},
+  {text:"Conduct chemical experiments",type:"I",hint:"Think: mixing and testing different substances in a lab to see what happens and why — like a chemistry class but as your job"},
+  {text:"Create special effects for movies",type:"A",hint:"Think: making the cool explosions, creatures, or digital backgrounds you see in action movies and video games"},
+  {text:"Perform rehabilitation therapy",type:"S",hint:"Think: helping someone recover from an injury or illness by working with them on exercises and activities to get stronger"},
+  {text:"Negotiate business contracts",type:"E",hint:"Think: talking with other companies or people to agree on a deal — like setting prices, terms, and what everyone gets"},
+  {text:"Keep shipping and receiving records",type:"C",hint:"Think: tracking what comes in and goes out of a warehouse or store so nothing gets lost or forgotten"},
+  {text:"Drive a truck to deliver packages",type:"R",hint:"Think: getting behind the wheel of a big vehicle to pick up and drop off goods to businesses or people's homes"},
+  {text:"Examine blood samples using a microscope",type:"I",hint:"Think: working in a medical lab and looking closely at tiny things through a microscope to help doctors figure out what's wrong with a patient"}
 ];
 
 const fmt=n=>n?'$'+n.toLocaleString():'—';
@@ -241,6 +258,9 @@ function renderQ(){
   const q=QS[cur],t=TYPES[q.type];
   document.getElementById('q-card').style.background=t.lightBg;
   document.getElementById('q-text').textContent=q.text;
+  const hintEl=document.getElementById('q-hint');
+  hintEl.textContent='💡 '+q.hint;
+  hintEl.style.color=t.textColor;
   document.getElementById('prog-fill').style.width=Math.round((cur/30)*100)+'%';
   document.getElementById('prog-fill').style.background=t.barColor;
   document.getElementById('prog-lbl').textContent=(cur+1)+' of 30';
@@ -292,14 +312,11 @@ function getTopCareers(types){
   const primary=types[0];
   const secondary=types.length>1?types[1]:null;
   const primaryCareers=[...CAREERS_FULL].filter(c=>c.riasec===primary).sort(sortFn);
-  for(const c of primaryCareers){if(!seen.has(c.soc)){seen.add(c.soc);results.push(c);}if(results.length>=4)break;}
-  if(secondary){
+  const primaryHasEnough=primaryCareers.length>=6;
+  for(const c of primaryCareers){if(!seen.has(c.soc)){seen.add(c.soc);results.push(c);}if(results.length>=6)break;}
+  if(!primaryHasEnough&&secondary){
     const secondaryCareers=[...CAREERS_FULL].filter(c=>c.riasec===secondary).sort(sortFn);
     for(const c of secondaryCareers){if(!seen.has(c.soc)){seen.add(c.soc);results.push(c);}if(results.length>=6)break;}
-  }
-  if(results.length<6){
-    const allMatched=[...CAREERS_FULL].filter(c=>c.riasec===primary||c.riasec===secondary).sort(sortFn);
-    for(const c of allMatched){if(!seen.has(c.soc)){seen.add(c.soc);results.push(c);}if(results.length>=6)break;}
   }
   return results;
 }
